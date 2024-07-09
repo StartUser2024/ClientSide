@@ -19,7 +19,7 @@ public class ClientSideApplication {
             fis.close();
 
             JSONObject json = new JSONObject();
-            json.put("fileName", "test.txt");
+            json.put("fileName", "TEST.txt");
             json.put("length", file.length());
             json.put("payload", new String(payload));
             System.out.println(payload);
