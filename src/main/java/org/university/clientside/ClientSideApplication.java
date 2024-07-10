@@ -3,7 +3,6 @@ package org.university.clientside;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.SneakyThrows;
-import org.json.JSONObject;
 import java.net.*;
 import java.io.*;
 import java.nio.ByteBuffer;
@@ -17,7 +16,7 @@ public class ClientSideApplication {
             SocketChannel client = SocketChannel.open(
                     new InetSocketAddress("localhost", 808));
 
-            File file = new File("C:\\Users\\User\\Downloads\\QWERTY.pptx");
+            File file = new File("C:\\Users\\User\\Downloads\\DOCX2.docx");
             FileInputStream fis = new FileInputStream(file);
 
             byte[] payload = new byte[(int) file.length()];
@@ -29,17 +28,6 @@ public class ClientSideApplication {
             System.out.println(json);
             ByteBuffer buf = ByteBuffer.wrap(json.getBytes());
 
-//            JSONObject json = new JSONObject();
-//            json.put("fileName", "TEST.txt");
-//            json.put("length", file.length());
-//            json.put("payload", new String(payload));
-//            System.out.println(payload);
-//            String jsonString =  json.toString();
-
-
-//            ByteBuffer buffer = ByteBuffer.allocate(1000);
-//            buffer.put(jsonString.getBytes());
-//            buffer.flip();
             client.write(buf);
             //System.out.println(String.format("Sending JSON: %s\nbufforBytes: %d", jsonString, bytesWritten));
             client.close();
