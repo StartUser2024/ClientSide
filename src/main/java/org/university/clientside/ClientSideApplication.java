@@ -1,50 +1,37 @@
 package org.university.clientside;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import lombok.SneakyThrows;
 import java.net.*;
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
 public class ClientSideApplication {
-    @SneakyThrows
     public static void main(String args[]) {
         try {
             System.out.println("Connection accepted by the Server..");
             SocketChannel client = SocketChannel.open(
                     new InetSocketAddress("localhost", 808));
 
-            File file = new File("C:\\Users\\User\\Downloads\\DOCX2.docx");
+            File file = new File("C:\\Users\\User\\Downloads\\qtcreator-windows-x64-mingw-13.0.0.7z");
             FileInputStream fis = new FileInputStream(file);
+            String message = file.getName() + "\r\n" + file.length() + "\r\n";
+            ByteBuffer buffer = ByteBuffer.wrap(message.getBytes());
+            client.write(buffer);
+            buffer.clear();
 
-            byte[] payload = new byte[(int) file.length()];
-            fis.read(payload);
-            fis.close();
-
-            Gson gson = new GsonBuilder().create();
-            String json = gson.toJson(new FileData(file.getName(), file.length(), payload));
-            System.out.println(json);
-            ByteBuffer buf = ByteBuffer.wrap(json.getBytes());
-
-            client.write(buf);
-            //System.out.println(String.format("Sending JSON: %s\nbufforBytes: %d", jsonString, bytesWritten));
+            int count;
+            while ((count = fis.read(buffer.array())) != -1) {
+                System.out.println(new String(buffer.array(), 0, count));
+                buffer.put(buffer.array(), 0, count);
+                buffer.flip();
+                client.write(buffer);
+                buffer.clear();
+            }
             client.close();
+            fis.close();
             System.out.println("Client connection closed");
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-    private static class FileData {
-        private final String name;
-        private final long length;
-        private final byte[] data;
-
-        public FileData(String name, long length, byte[] data) {
-            this.name = name;
-            this.length = length;
-            this.data = data;
         }
     }
 }
