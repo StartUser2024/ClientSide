@@ -1,7 +1,5 @@
 plugins {
     java
-    id("org.springframework.boot") version "3.3.1"
-    id("io.spring.dependency-management") version "1.1.5"
 }
 
 group = "org.University"
@@ -24,18 +22,9 @@ repositories {
     maven { url = uri("https://repo.spring.io/milestone") }
 }
 
-extra["springCloudVersion"] = "2023.0.2"
-
 dependencies {
-    implementation("org.springframework.cloud:spring-cloud-function-context")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-}
-
-dependencyManagement {
-    imports {
-        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
-    }
+    testImplementation ("org.junit.jupiter:junit-jupiter:5.7.1")
+    testRuntimeOnly ("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.withType<Test> {
