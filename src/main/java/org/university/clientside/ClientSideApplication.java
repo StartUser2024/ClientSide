@@ -8,7 +8,7 @@ import java.nio.channels.SocketChannel;
 public class ClientSideApplication {
     public static void main(String args[]) {
         try {
-            File file = new File("C:\\Users\\User\\Downloads\\QWERTY.pptx");//qtcreator-windows-x64-mingw-13.0.0.7z");
+            File file = new File("C:\\Users\\User\\Downloads\\Win81-WS1.ova");//qtcreator-windows-x64-mingw-13.0.0.7z");
             FileInputStream fis = new FileInputStream(file);
             System.out.println("Connection accepted by the Server..");
             SocketChannel client = SocketChannel.open(
